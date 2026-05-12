@@ -25,19 +25,19 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
-        <Link to="/" className="inline-flex items-center text-gray-600 hover:text-bank-primary mb-8 transition">
+        <Link to="/" className="inline-flex items-center text-gray-600 hover:text-bank-primary mb-6 sm:mb-8 transition text-sm sm:text-base">
           <ArrowLeft className="w-4 h-4 mr-2" /> Back to home
         </Link>
         
-        <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+        <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 border border-gray-100">
           <div className="flex justify-center mb-6">
-            <div className="w-12 h-12 bg-bank-primary rounded-xl flex items-center justify-center">
-              <Shield className="w-7 h-7 text-white" />
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-bank-primary rounded-xl flex items-center justify-center">
+              <Shield className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
             </div>
           </div>
           
-          <h1 className="text-2xl font-bold text-center text-bank-dark mb-2">Welcome Back</h1>
-          <p className="text-gray-500 text-center mb-8">Sign in to access your account</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-center text-bank-dark mb-2">Welcome Back</h1>
+          <p className="text-gray-500 text-center mb-6 sm:mb-8 text-sm sm:text-base">Sign in to access your account</p>
           
           {error && (
             <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm mb-6 text-center">
@@ -45,14 +45,14 @@ export default function LoginPage() {
             </div>
           )}
           
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-bank-primary focus:ring-2 focus:ring-blue-100 outline-none transition"
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-bank-primary focus:ring-2 focus:ring-blue-100 outline-none transition text-sm sm:text-base"
                 placeholder="alex@example.com"
                 required
               />
@@ -65,7 +65,7 @@ export default function LoginPage() {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-bank-primary focus:ring-2 focus:ring-blue-100 outline-none transition pr-12"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-bank-primary focus:ring-2 focus:ring-blue-100 outline-none transition pr-12 text-sm sm:text-base"
                   placeholder="••••••••"
                   required
                 />
@@ -79,7 +79,7 @@ export default function LoginPage() {
               </div>
             </div>
             
-            <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center justify-between text-xs sm:text-sm">
               <label className="flex items-center">
                 <input type="checkbox" className="rounded border-gray-300 text-bank-primary focus:ring-bank-primary" />
                 <span className="ml-2 text-gray-600">Remember me</span>
@@ -89,13 +89,13 @@ export default function LoginPage() {
             
             <button
               type="submit"
-              className="w-full bg-bank-primary text-white py-3 rounded-xl font-semibold hover:bg-blue-900 transition shadow-lg shadow-blue-900/20"
+              className="w-full bg-bank-primary text-white py-3 rounded-xl font-semibold hover:bg-blue-900 transition shadow-lg shadow-blue-900/20 text-sm sm:text-base active:scale-[0.98]"
             >
               Sign In
             </button>
           </form>
           
-          <p className="text-center mt-6 text-gray-600">
+          <p className="text-center mt-6 text-gray-600 text-sm sm:text-base">
             Don't have an account?{' '}
             <Link to="/register" className="text-bank-primary font-semibold hover:underline">Create one</Link>
           </p>

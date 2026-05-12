@@ -37,7 +37,7 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="max-w-4xl w-full grid md:grid-cols-2 gap-8">
+      <div className="max-w-4xl w-full grid md:grid-cols-2 gap-6 md:gap-8">
         {/* Left Side - Benefits */}
         <div className="hidden md:flex flex-col justify-center">
           <Link to="/" className="inline-flex items-center text-gray-600 hover:text-bank-primary mb-8 transition">
@@ -58,15 +58,15 @@ export default function RegisterPage() {
         </div>
 
         {/* Right Side - Form */}
-        <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+        <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 border border-gray-100">
           <div className="md:hidden flex justify-center mb-6">
             <div className="w-12 h-12 bg-bank-primary rounded-xl flex items-center justify-center">
               <Shield className="w-7 h-7 text-white" />
             </div>
           </div>
           
-          <h1 className="text-2xl font-bold text-center text-bank-dark mb-2">Create Account</h1>
-          <p className="text-gray-500 text-center mb-8">Start your journey with us</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-center text-bank-dark mb-2">Create Account</h1>
+          <p className="text-gray-500 text-center mb-6 sm:mb-8 text-sm sm:text-base">Start your journey with us</p>
           
           {error && (
             <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm mb-6 text-center">
@@ -82,7 +82,7 @@ export default function RegisterPage() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-bank-primary focus:ring-2 focus:ring-blue-100 outline-none transition"
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-bank-primary focus:ring-2 focus:ring-blue-100 outline-none transition text-sm sm:text-base"
                 placeholder="Alex Johnson"
                 required
               />
@@ -95,7 +95,7 @@ export default function RegisterPage() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-bank-primary focus:ring-2 focus:ring-blue-100 outline-none transition"
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-bank-primary focus:ring-2 focus:ring-blue-100 outline-none transition text-sm sm:text-base"
                 placeholder="alex@example.com"
                 required
               />
@@ -109,7 +109,7 @@ export default function RegisterPage() {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-bank-primary focus:ring-2 focus:ring-blue-100 outline-none transition pr-12"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-bank-primary focus:ring-2 focus:ring-blue-100 outline-none transition pr-12 text-sm sm:text-base"
                   placeholder="••••••••"
                   required
                 />
@@ -130,7 +130,7 @@ export default function RegisterPage() {
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-bank-primary focus:ring-2 focus:ring-blue-100 outline-none transition"
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-bank-primary focus:ring-2 focus:ring-blue-100 outline-none transition text-sm sm:text-base"
                 placeholder="••••••••"
                 required
               />
@@ -138,20 +138,20 @@ export default function RegisterPage() {
             
             <div className="flex items-start">
               <input type="checkbox" className="mt-1 rounded border-gray-300 text-bank-primary focus:ring-bank-primary" required />
-              <span className="ml-2 text-sm text-gray-600">
+              <span className="ml-2 text-xs sm:text-sm text-gray-600">
                 I agree to the <Link to="#" className="text-bank-primary hover:underline">Terms of Service</Link> and <Link to="#" className="text-bank-primary hover:underline">Privacy Policy</Link>
               </span>
             </div>
             
             <button
               type="submit"
-              className="w-full bg-bank-primary text-white py-3 rounded-xl font-semibold hover:bg-blue-900 transition shadow-lg shadow-blue-900/20"
+              className="w-full bg-bank-primary text-white py-3 rounded-xl font-semibold hover:bg-blue-900 transition shadow-lg shadow-blue-900/20 text-sm sm:text-base active:scale-[0.98]"
             >
               Create Free Account
             </button>
           </form>
           
-          <p className="text-center mt-6 text-gray-600">
+          <p className="text-center mt-6 text-gray-600 text-sm sm:text-base">
             Already have an account?{' '}
             <Link to="/login" className="text-bank-primary font-semibold hover:underline">Sign in</Link>
           </p>
