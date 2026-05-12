@@ -53,13 +53,27 @@ export default function LandingPage() {
         )}
       </nav>
 
-      {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-bank-primary via-blue-800 to-blue-900 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 relative">
+      {/* Hero Section - Mobile Optimized Background */}
+      <div className="relative text-white overflow-hidden min-h-[500px] sm:min-h-auto" style={{
+        background: 'linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #172554 100%)'
+      }}>
+        {/* Background texture - inline SVG for reliability */}
+        <div className="absolute inset-0 opacity-10" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+        }}></div>
+        
+        {/* Additional gradient overlay for depth */}
+        <div className="absolute inset-0" style={{
+          background: 'linear-gradient(to top, rgba(30, 58, 138, 0.5), transparent)'
+        }}></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 relative z-10">
           <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
             <div>
-              <div className="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-3 sm:px-4 py-1 mb-4 sm:mb-6 border border-white/20 text-sm">
+              <div className="inline-flex items-center rounded-full px-3 sm:px-4 py-1 mb-4 sm:mb-6 border border-white/20 text-sm" style={{
+                background: 'rgba(255, 255, 255, 0.1)',
+                backdropFilter: 'blur(4px)'
+              }}>
                 <Star className="w-4 h-4 text-yellow-400 mr-2" />
                 <span className="font-medium">Trusted by 2M+ customers</span>
               </div>
@@ -70,16 +84,22 @@ export default function LandingPage() {
                 Experience modern banking with zero fees, instant transfers, and real-time analytics. Your money, your control.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                <Link to="/register" className="bg-emerald-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold hover:bg-emerald-600 transition flex items-center justify-center text-sm sm:text-base">
+                <Link to="/register" className="text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold hover:brightness-110 transition flex items-center justify-center text-sm sm:text-base" style={{
+                  background: '#10b981'
+                }}>
                   Open Free Account <ChevronRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
                 </Link>
-                <Link to="/login" className="bg-white/10 backdrop-blur-sm text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold hover:bg-white/20 transition border border-white/20 text-center text-sm sm:text-base">
+                <Link to="/login" className="text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold hover:brightness-110 transition border border-white/20 text-center text-sm sm:text-base" style={{
+                  background: 'rgba(255, 255, 255, 0.1)'
+                }}>
                   Access Account
                 </Link>
               </div>
             </div>
             <div className="hidden md:block">
-              <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/20 shadow-2xl transform rotate-2 hover:rotate-0 transition duration-500">
+              <div className="rounded-3xl p-6 sm:p-8 border border-white/20 shadow-2xl transform rotate-2 hover:rotate-0 transition duration-500" style={{
+                background: 'rgba(255, 255, 255, 0.1)'
+              }}>
                 <div className="flex justify-between items-center mb-4 sm:mb-6">
                   <span className="text-sm font-medium text-blue-200">Total Balance</span>
                   <Smartphone className="w-5 h-5 text-blue-200" />
@@ -88,9 +108,13 @@ export default function LandingPage() {
                 <div className="text-emerald-300 text-sm mb-6 sm:mb-8">+ $1,240.00 this month</div>
                 <div className="space-y-3">
                   {[1,2,3].map((i) => (
-                    <div key={i} className="flex justify-between items-center bg-white/5 rounded-lg p-3">
+                    <div key={i} className="flex justify-between items-center rounded-lg p-3" style={{
+                      background: 'rgba(255, 255, 255, 0.05)'
+                    }}>
                       <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-white/20 rounded-full"></div>
+                        <div className="w-8 h-8 rounded-full" style={{
+                          background: 'rgba(255, 255, 255, 0.2)'
+                        }}></div>
                         <div className="text-sm">Transaction {i}</div>
                       </div>
                       <div className="text-sm font-medium">-$45.00</div>

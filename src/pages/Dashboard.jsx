@@ -4,7 +4,7 @@ import {
   LayoutDashboard, CreditCard, ArrowUpRight, ArrowDownLeft, 
   Wallet, Bell, Settings, LogOut, TrendingUp, TrendingDown,
   Send, Download, ShoppingCart, Coffee, Home, Zap, Menu, X,
-  ChevronRight, User
+  ChevronRight
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -221,11 +221,22 @@ export default function Dashboard() {
           <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
             {/* Main Content Area */}
             <div className="lg:col-span-2 space-y-6 lg:space-y-8">
-              {/* Credit Card - Mobile Optimized */}
-              <div className="bg-gradient-to-br from-bank-primary via-blue-800 to-blue-900 rounded-2xl p-5 sm:p-8 text-white shadow-xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 bg-white/5 rounded-full -mr-24 -mt-24 sm:-mr-32 sm:-mt-32"></div>
-                <div className="absolute bottom-0 left-0 w-32 h-32 sm:w-48 sm:h-48 bg-white/5 rounded-full -ml-16 -mb-16 sm:-ml-24 sm:-mb-24"></div>
-                <div className="relative">
+              {/* Credit Card - Mobile Optimized with Guaranteed Background */}
+              <div className="relative rounded-2xl p-5 sm:p-8 text-white shadow-xl overflow-hidden" style={{
+                background: 'linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #172554 100%)'
+              }}>
+                {/* Decorative circles - positioned to show on all screen sizes */}
+                <div className="absolute top-0 right-0 w-40 h-40 sm:w-64 sm:h-64 rounded-full -mr-20 -mt-20 sm:-mr-32 sm:-mt-32 pointer-events-none" style={{
+                  background: 'rgba(255, 255, 255, 0.1)'
+                }}></div>
+                <div className="absolute bottom-0 left-0 w-32 h-32 sm:w-48 sm:h-48 rounded-full -ml-16 -mb-16 sm:-ml-24 sm:-mb-24 pointer-events-none" style={{
+                  background: 'rgba(255, 255, 255, 0.05)'
+                }}></div>
+                <div className="absolute top-1/2 left-1/2 w-24 h-24 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none" style={{
+                  background: 'rgba(96, 165, 250, 0.1)'
+                }}></div>
+                
+                <div className="relative z-10">
                   <div className="flex justify-between items-start mb-6 sm:mb-8">
                     <div>
                       <p className="text-blue-200 text-xs sm:text-sm mb-1">Current Balance</p>
@@ -310,15 +321,32 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              {/* Savings Goal */}
-              <div className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-5 sm:p-6 text-white shadow-lg">
-                <h3 className="text-base sm:text-lg font-bold mb-2">Vacation Fund</h3>
-                <p className="text-emerald-100 text-xs sm:text-sm mb-4 sm:mb-6">Target: $5,000</p>
-                <div className="text-2xl sm:text-3xl font-bold mb-4">$3,240</div>
-                <div className="w-full bg-white/20 rounded-full h-2.5 sm:h-3 mb-2">
-                  <div className="bg-white h-2.5 sm:h-3 rounded-full" style={{ width: '65%' }}></div>
+              {/* Savings Goal - Fixed for Mobile */}
+              <div className="rounded-2xl p-5 sm:p-6 text-white shadow-lg relative overflow-hidden" style={{
+                background: 'linear-gradient(135deg, #10b981 0%, #0d9488 50%, #0f766e 100%)'
+              }}>
+                {/* Decorative elements for visual interest */}
+                <div className="absolute top-0 right-0 w-32 h-32 rounded-full -mr-16 -mt-16 pointer-events-none" style={{
+                  background: 'rgba(255, 255, 255, 0.1)'
+                }}></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full -ml-12 -mb-12 pointer-events-none" style={{
+                  background: 'rgba(255, 255, 255, 0.05)'
+                }}></div>
+                
+                <div className="relative z-10">
+                  <h3 className="text-base sm:text-lg font-bold mb-2">Vacation Fund</h3>
+                  <p className="text-emerald-100 text-xs sm:text-sm mb-4 sm:mb-6">Target: $5,000</p>
+                  <div className="text-2xl sm:text-3xl font-bold mb-4">$3,240</div>
+                  <div className="w-full rounded-full h-2.5 sm:h-3 mb-2" style={{
+                    background: 'rgba(255, 255, 255, 0.2)'
+                  }}>
+                    <div className="h-2.5 sm:h-3 rounded-full" style={{
+                      width: '65%',
+                      background: '#ffffff'
+                    }}></div>
+                  </div>
+                  <p className="text-emerald-100 text-xs sm:text-sm">65% completed</p>
                 </div>
-                <p className="text-emerald-100 text-xs sm:text-sm">65% completed</p>
               </div>
             </div>
           </div>
