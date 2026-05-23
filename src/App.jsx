@@ -20,6 +20,12 @@ import Layout from './components/Layout';
 
 
 import { AuthProvider, useAuth } from './context/AuthContext';
+import SendMoney from './pages/SendMoney';
+import CardsPage from './pages/CardsPage';
+import TransactionsPage from './pages/TransactionsPage';
+import WalletPage from './pages/WalletPage';
+import NotificationsPage from './pages/NotificationsPage';
+import SettingsPage from './pages/SettingsPage';
 
 function PrivateRoute({ children }) {
   const { isAuthenticated } = useAuth();
@@ -31,11 +37,10 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<Layout><LandingPage /></Layout>}  />
+          <Route path="/" element={<Layout><LandingPage /></Layout>} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/enroll_user" element={<RegisterPage />} />
-          <Route path="/" element={<Layout><LandingPage /></Layout>} />
           <Route path="/vision" element={<Layout><VisionPage /></Layout>} />
           <Route path="/performance" element={<Layout><PerformancePage /></Layout>} />
           <Route path="/support" element={<Layout><SupportPage /></Layout>} />
@@ -52,9 +57,23 @@ function App() {
             element={
               <PrivateRoute>
                 <Dashboard />
+
               </PrivateRoute>
             }
           />
+
+          <Route path="/send" element={
+            <PrivateRoute> 
+              <SendMoney />
+            </PrivateRoute>
+          } />
+
+
+          <Route path="/cards" element={  <PrivateRoute> <CardsPage /></PrivateRoute>} />
+<Route path="/transactions" element={ <PrivateRoute><TransactionsPage /></PrivateRoute> } />
+<Route path="/wallet" element={ <PrivateRoute><WalletPage /></PrivateRoute> } />
+<Route path="/notifications" element={ <PrivateRoute> <NotificationsPage /></PrivateRoute>} />
+<Route path="/settings" element={ <PrivateRoute><SettingsPage /></PrivateRoute> } />
         </Routes>
 
 

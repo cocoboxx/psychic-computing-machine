@@ -1,8 +1,15 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Shield, Eye, EyeOff, Mail, Lock, ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
+import { useAuth } from '../context/AuthContext'; // adjust path if needed
 
 export default function LoginPage() {
+
+
+
+
+
+
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
@@ -18,10 +25,21 @@ export default function LoginPage() {
     }));
   };
 
+
+
+
+  const navigate = useNavigate()
+  const { login } = useAuth();
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle login logic
+     
     console.log('Login submitted:', formData);
+     const success = login(formData); // pass separately, not as object
+  
+  if (success) {
+    navigate('/dashboard');
+  }
+   
   };
 
   return (

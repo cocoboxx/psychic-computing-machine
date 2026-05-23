@@ -1,31 +1,51 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { 
-  LayoutDashboard, CreditCard, ArrowUpRight, ArrowDownLeft, 
+import {
+  LayoutDashboard, CreditCard, ArrowUpRight, ArrowDownLeft,
   Wallet, Bell, Settings, LogOut, TrendingUp, TrendingDown,
   Send, Download, ShoppingCart, Coffee, Home, Zap, Menu, X,
   ChevronRight
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('Dashboard');
+
+  // Sync activeTab with current route
+  const getActiveTabFromPath = () => {
+    const path = location.pathname;
+    if (path === '/dashboard' || path === '/') return 'Dashboard';
+    if (path === '/cards') return 'Cards';
+    if (path === '/transactions') return 'Transactions';
+    if (path === '/wallet') return 'Wallet';
+    if (path === '/notifications') return 'Notifications';
+    if (path === '/settings') return 'Settings';
+    return 'Dashboard';
+  };
+
+  const [activeTab, setActiveTab] = useState(getActiveTabFromPath());
 
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
 
+  const handleNavigation = (tabName, path) => {
+    setActiveTab(tabName);
+    setMobileMenuOpen(false);
+    navigate(path);
+  };
+
   const navItems = [
-    { name: 'Dashboard', icon: <LayoutDashboard className="w-5 h-5" />, mobileIcon: <LayoutDashboard className="w-6 h-6" /> },
-    { name: 'Cards', icon: <CreditCard className="w-5 h-5" />, mobileIcon: <CreditCard className="w-6 h-6" /> },
-    { name: 'Transactions', icon: <ArrowUpRight className="w-5 h-5" />, mobileIcon: <ArrowUpRight className="w-6 h-6" /> },
-    { name: 'Wallet', icon: <Wallet className="w-5 h-5" />, mobileIcon: <Wallet className="w-6 h-6" /> },
-    { name: 'Notifications', icon: <Bell className="w-5 h-5" />, mobileIcon: <Bell className="w-6 h-6" /> },
-    { name: 'Settings', icon: <Settings className="w-5 h-5" />, mobileIcon: <Settings className="w-6 h-6" /> },
+    { name: 'Dashboard', icon: <LayoutDashboard className="w-5 h-5" />, mobileIcon: <LayoutDashboard className="w-6 h-6" />, path: '/dashboard' },
+    { name: 'Cards', icon: <CreditCard className="w-5 h-5" />, mobileIcon: <CreditCard className="w-6 h-6" />, path: '/cards' },
+    { name: 'Transactions', icon: <ArrowUpRight className="w-5 h-5" />, mobileIcon: <ArrowUpRight className="w-6 h-6" />, path: '/transactions' },
+    { name: 'Wallet', icon: <Wallet className="w-5 h-5" />, mobileIcon: <Wallet className="w-6 h-6" />, path: '/wallet' },
+    { name: 'Notifications', icon: <Bell className="w-5 h-5" />, mobileIcon: <Bell className="w-6 h-6" />, path: '/notifications' },
+    { name: 'Settings', icon: <Settings className="w-5 h-5" />, mobileIcon: <Settings className="w-6 h-6" />, path: '/settings' },
   ];
 
   const stats = [
@@ -44,10 +64,25 @@ export default function Dashboard() {
   ];
 
   const quickActions = [
-    { name: 'Send', icon: <Send className="w-5 h-5" />, color: 'bg-blue-500' },
-    { name: 'Request', icon: <Download className="w-5 h-5" />, color: 'bg-emerald-500' },
-    { name: 'Top Up', icon: <CreditCard className="w-5 h-5" />, color: 'bg-purple-500' },
-    { name: 'More', icon: <Settings className="w-5 h-5" />, color: 'bg-gray-500' },
+    { name: 'Send', 
+      icon: <Send className="w-5 h-5" />, 
+      color: 'bg-blue-500' ,
+      onClick: () => navigate('/send') 
+    },
+    { name: 'Request', 
+      icon: <Download className="w-5 h-5" />,
+       color: 'bg-emerald-500' ,
+      onClick: () => {} 
+      },
+    { name: 'Top Up',
+       icon: <CreditCard className="w-5 h-5" />, 
+       color: 'bg-purple-500',
+       onClick: () => {} 
+       },
+    { name: 'More', 
+      icon: <Settings className="w-5 h-5" />, 
+      color: 'bg-gray-500',
+    onClick: () => navigate('/settings') },
   ];
 
   return (
@@ -60,26 +95,25 @@ export default function Dashboard() {
           </div>
           <span className="text-xl font-bold text-bank-primary">NovaBank</span>
         </div>
-        
+
         <nav className="flex-1 px-4 space-y-1">
           {navItems.map((item) => (
             <button
               key={item.name}
-              onClick={() => setActiveTab(item.name)}
-              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition ${
-                activeTab === item.name
-                  ? 'bg-bank-primary text-white shadow-lg shadow-blue-900/20' 
+              onClick={() => handleNavigation(item.name, item.path)}
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition ${activeTab === item.name
+                  ? 'bg-bank-primary text-white shadow-lg shadow-blue-900/20'
                   : 'text-gray-600 hover:bg-gray-50'
-              }`}
+                }`}
             >
               {item.icon}
               <span className="font-medium">{item.name}</span>
             </button>
           ))}
         </nav>
-        
+
         <div className="p-4 border-t border-gray-100">
-          <button 
+          <button
             onClick={handleLogout}
             className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-red-600 hover:bg-red-50 transition"
           >
@@ -99,11 +133,14 @@ export default function Dashboard() {
             <span className="text-lg font-bold text-bank-primary">NovaBank</span>
           </div>
           <div className="flex items-center space-x-3">
-            <button className="relative p-2 text-gray-400 hover:text-gray-600 transition">
+            <button 
+              onClick={() => navigate('/notifications')}
+              className="relative p-2 text-gray-400 hover:text-gray-600 transition"
+            >
               <Bell className="w-5 h-5" />
               <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
             </button>
-            <button 
+            <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition"
             >
@@ -123,7 +160,7 @@ export default function Dashboard() {
               </div>
               <span className="text-lg font-bold text-bank-primary">Menu</span>
             </div>
-            <button 
+            <button
               onClick={() => setMobileMenuOpen(false)}
               className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition"
             >
@@ -134,15 +171,11 @@ export default function Dashboard() {
             {navItems.map((item) => (
               <button
                 key={item.name}
-                onClick={() => {
-                  setActiveTab(item.name);
-                  setMobileMenuOpen(false);
-                }}
-                className={`w-full flex items-center space-x-3 px-4 py-4 rounded-xl transition text-lg ${
-                  activeTab === item.name
-                    ? 'bg-bank-primary text-white shadow-lg shadow-blue-900/20' 
+                onClick={() => handleNavigation(item.name, item.path)}
+                className={`w-full flex items-center space-x-3 px-4 py-4 rounded-xl transition text-lg ${activeTab === item.name
+                    ? 'bg-bank-primary text-white shadow-lg shadow-blue-900/20'
                     : 'text-gray-600 hover:bg-gray-50'
-                }`}
+                  }`}
               >
                 {item.icon}
                 <span className="font-medium">{item.name}</span>
@@ -150,7 +183,7 @@ export default function Dashboard() {
               </button>
             ))}
             <div className="pt-4 border-t border-gray-100 mt-4">
-              <button 
+              <button
                 onClick={handleLogout}
                 className="w-full flex items-center space-x-3 px-4 py-4 rounded-xl text-red-600 hover:bg-red-50 transition text-lg"
               >
@@ -172,7 +205,10 @@ export default function Dashboard() {
               <p className="text-gray-500 text-sm">Welcome back, {user?.name || 'User'}</p>
             </div>
             <div className="flex items-center space-x-4">
-              <button className="relative p-2 text-gray-400 hover:text-gray-600 transition">
+              <button 
+                onClick={() => navigate('/notifications')}
+                className="relative p-2 text-gray-400 hover:text-gray-600 transition"
+              >
                 <Bell className="w-6 h-6" />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
               </button>
@@ -235,7 +271,7 @@ export default function Dashboard() {
                 <div className="absolute top-1/2 left-1/2 w-24 h-24 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none" style={{
                   background: 'rgba(96, 165, 250, 0.1)'
                 }}></div>
-                
+
                 <div className="relative z-10">
                   <div className="flex justify-between items-start mb-6 sm:mb-8">
                     <div>
@@ -260,7 +296,7 @@ export default function Dashboard() {
               {/* Quick Actions - Mobile Optimized */}
               <div className="grid grid-cols-4 gap-2 sm:gap-4">
                 {quickActions.map((action) => (
-                  <button key={action.name} className="bg-white rounded-xl p-3 sm:p-4 shadow-sm border border-gray-100 hover:shadow-md transition flex flex-col items-center space-y-1.5 sm:space-y-2 group active:scale-95">
+                  <button onClick={action.onClick} key={action.name} className="bg-white rounded-xl p-3 sm:p-4 shadow-sm border border-gray-100 hover:shadow-md transition flex flex-col items-center space-y-1.5 sm:space-y-2 group active:scale-95">
                     <div className={`w-10 h-10 sm:w-12 sm:h-12 ${action.color} rounded-full flex items-center justify-center text-white group-hover:scale-110 transition`}>
                       {action.icon}
                     </div>
@@ -273,7 +309,12 @@ export default function Dashboard() {
               <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                 <div className="p-4 sm:p-6 border-b border-gray-100 flex justify-between items-center">
                   <h3 className="text-base sm:text-lg font-bold text-bank-dark">Recent Transactions</h3>
-                  <button className="text-bank-primary text-xs sm:text-sm font-semibold hover:underline">View All</button>
+                  <button 
+                    onClick={() => navigate('/transactions')}
+                    className="text-bank-primary text-xs sm:text-sm font-semibold hover:underline"
+                  >
+                    View All
+                  </button>
                 </div>
                 <div className="divide-y divide-gray-50">
                   {transactions.map((tx) => (
@@ -332,7 +373,7 @@ export default function Dashboard() {
                 <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full -ml-12 -mb-12 pointer-events-none" style={{
                   background: 'rgba(255, 255, 255, 0.05)'
                 }}></div>
-                
+
                 <div className="relative z-10">
                   <h3 className="text-base sm:text-lg font-bold mb-2">Vacation Fund</h3>
                   <p className="text-emerald-100 text-xs sm:text-sm mb-4 sm:mb-6">Target: $5,000</p>
@@ -359,12 +400,11 @@ export default function Dashboard() {
           {navItems.slice(0, 5).map((item) => (
             <button
               key={item.name}
-              onClick={() => setActiveTab(item.name)}
-              className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition ${
-                activeTab === item.name
-                  ? 'text-bank-primary' 
+              onClick={() => handleNavigation(item.name, item.path)}
+              className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition ${activeTab === item.name
+                  ? 'text-bank-primary'
                   : 'text-gray-400 hover:text-gray-600'
-              }`}
+                }`}
             >
               {item.mobileIcon}
               <span className="text-[10px] font-medium">{item.name}</span>
