@@ -184,7 +184,9 @@ export default function WalletPage() {
           </div>
 
           {/* Total Balance Hero */}
-          <div className="relative rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-white shadow-xl overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800">
+          <div className="relative rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-white shadow-xl overflow-hidden" style={{
+                background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #3730a3 100%)'
+              }}>
             <div className="absolute top-0 right-0 w-64 h-64 rounded-full -mr-32 -mt-32 bg-white/10 pointer-events-none"></div>
             <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full -ml-24 -mb-24 bg-white/5 pointer-events-none"></div>
             <div className="relative z-10">

@@ -236,7 +236,11 @@ export default function CardsPage() {
             {cards.map((card, idx) => (
               <div key={card.id} className={`bg-white rounded-2xl sm:rounded-3xl shadow-sm border border-gray-100 overflow-hidden ${selectedCard === idx ? 'ring-2 ring-bank-primary' : ''}`}>
                 {/* Card Visual */}
-                <div className={`relative p-6 sm:p-8 text-white overflow-hidden bg-gradient-to-br ${card.color}`}>
+                <div className="relative p-6 sm:p-8 text-white overflow-hidden" style={{
+                    background: card.id === 1 ? 'linear-gradient(135deg, #2563eb 0%, #1e40af 50%, #1e3a8a 100%)' :
+                                card.id === 2 ? 'linear-gradient(135deg, #9333ea 0%, #7c3aed 50%, #6b21a8 100%)' :
+                                'linear-gradient(135deg, #059669 0%, #0d9488 50%, #115e59 100%)'
+                  }}>
                   <div className="absolute top-0 right-0 w-64 h-64 rounded-full -mr-32 -mt-32 bg-white/10 pointer-events-none"></div>
                   <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full -ml-24 -mb-24 bg-white/5 pointer-events-none"></div>
 
