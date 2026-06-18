@@ -21,7 +21,7 @@ export default function LandingPage() {
               <div className="w-8 h-8 bg-bank-primary rounded-lg flex items-center justify-center">
                 <Shield className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold text-bank-primary">NovaBank</span>
+              <span className="text-xl font-bold text-bank-primary">Regional EU Bank</span>
             </div>
             
             {/* Desktop Nav */}
@@ -157,9 +157,9 @@ export default function LandingPage() {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-2 mb-4 md:mb-0">
               <Shield className="w-6 h-6 text-blue-400" />
-              <span className="text-xl font-bold text-white">NovaBank</span>
+              <span className="text-xl font-bold text-white">Regional EU Bank</span>
             </div>
-            <div className="text-sm">© 2026 NovaBank. All rights reserved.</div>
+            <div className="text-sm">© 2026 Regional EU Bank. All rights reserved.</div>
           </div>
         </div>
       </footer>

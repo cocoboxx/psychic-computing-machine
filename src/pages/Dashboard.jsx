@@ -72,7 +72,7 @@ export default function Dashboard() {
     { name: 'Request', 
       icon: <Download className="w-5 h-5" />,
        color: 'bg-emerald-500' ,
-      onClick: () => {} 
+      onClick: () => {navigate('/request_money')} 
       },
     { name: 'Top Up',
        icon: <CreditCard className="w-5 h-5" />, 
@@ -93,7 +93,7 @@ export default function Dashboard() {
           <div className="w-8 h-8 bg-bank-primary rounded-lg flex items-center justify-center">
             <LayoutDashboard className="w-5 h-5 text-white" />
           </div>
-          <span className="text-xl font-bold text-bank-primary">NovaBank</span>
+          <span className="text-xl font-bold text-bank-primary">Regional EU Bank</span>
         </div>
 
         <nav className="flex-1 px-4 space-y-1">
@@ -130,7 +130,7 @@ export default function Dashboard() {
             <div className="w-8 h-8 bg-bank-primary rounded-lg flex items-center justify-center">
               <LayoutDashboard className="w-5 h-5 text-white" />
             </div>
-            <span className="text-lg font-bold text-bank-primary">NovaBank</span>
+            <span className="text-lg font-bold text-bank-primary">Regional EU Bank</span>
           </div>
           <div className="flex items-center space-x-3">
             <button 

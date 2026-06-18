@@ -26,6 +26,7 @@ import TransactionsPage from './pages/TransactionsPage';
 import WalletPage from './pages/WalletPage';
 import NotificationsPage from './pages/NotificationsPage';
 import SettingsPage from './pages/SettingsPage';
+import RequestMoney from './pages/RequestMoney';
 
 function PrivateRoute({ children }) {
   const { isAuthenticated } = useAuth();
@@ -52,21 +53,9 @@ function App() {
           <Route path="/charity_loan" element={<Layout><CharityLoanPage /></Layout>} />
           <Route path="/social_housing" element={<Layout><SocialHousingPage /></Layout>} />
           <Route path="/mortgage" element={<Layout><MortgagePage /></Layout>} />
-          <Route
-            path="/dashboard"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-
-              </PrivateRoute>
-            }
-          />
-
-          <Route path="/send" element={
-            <PrivateRoute> 
-              <SendMoney />
-            </PrivateRoute>
-          } />
+          <Route path="/dashboard"element={<PrivateRoute><Dashboard /></PrivateRoute>    } />
+          <Route path="/send" element={<PrivateRoute> <SendMoney /></PrivateRoute> } />
+          <Route path="/request_money" element={<PrivateRoute> <RequestMoney /></PrivateRoute> } />
 
 
           <Route path="/cards" element={  <PrivateRoute> <CardsPage /></PrivateRoute>} />

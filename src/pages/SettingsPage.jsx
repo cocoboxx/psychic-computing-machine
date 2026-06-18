@@ -66,7 +66,7 @@ export default function SettingsPage() {
           <div className="w-8 h-8 bg-bank-primary rounded-lg flex items-center justify-center">
             <LayoutDashboard className="w-5 h-5 text-white" />
           </div>
-          <span className="text-xl font-bold text-bank-primary">NovaBank</span>
+          <span className="text-xl font-bold text-bank-primary">Regional EU Bank</span>
         </div>
         <nav className="flex-1 px-4 space-y-1">
           {navItems.map((item) => (
@@ -98,7 +98,7 @@ export default function SettingsPage() {
             <div className="w-8 h-8 bg-bank-primary rounded-lg flex items-center justify-center">
               <LayoutDashboard className="w-5 h-5 text-white" />
             </div>
-            <span className="text-lg font-bold text-bank-primary">NovaBank</span>
+            <span className="text-lg font-bold text-bank-primary">Regional EU Bank</span>
           </div>
           <div className="flex items-center space-x-3">
             <button className="relative p-2 text-gray-400 hover:text-gray-600 transition">
@@ -223,7 +223,7 @@ export default function SettingsPage() {
                     <div className="flex flex-wrap justify-center sm:justify-start gap-3 mt-3">
                       <span className="flex items-center space-x-1 text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-lg">
                         <Mail className="w-3 h-3" />
-                        <span>alex@novabank.com</span>
+                        <span>alex@Regional EU Bank.com</span>
                       </span>
                       <span className="flex items-center space-x-1 text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-lg">
                         <Phone className="w-3 h-3" />
@@ -244,7 +244,7 @@ export default function SettingsPage() {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1.5">Email Address</label>
-                    <input type="email" defaultValue="alex@novabank.com" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-bank-primary focus:ring-2 focus:ring-blue-100 outline-none transition text-sm" />
+                    <input type="email" defaultValue="alex@RegionaleUbank.com" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-bank-primary focus:ring-2 focus:ring-blue-100 outline-none transition text-sm" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1.5">Phone Number</label>

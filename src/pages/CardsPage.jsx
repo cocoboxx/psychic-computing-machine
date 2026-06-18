@@ -106,7 +106,7 @@ export default function CardsPage() {
           <div className="w-8 h-8 bg-bank-primary rounded-lg flex items-center justify-center">
             <LayoutDashboard className="w-5 h-5 text-white" />
           </div>
-          <span className="text-xl font-bold text-bank-primary">NovaBank</span>
+          <span className="text-xl font-bold text-bank-primary">Regional EU Bank</span>
         </div>
         <nav className="flex-1 px-4 space-y-1">
           {navItems.map((item) => (
@@ -138,7 +138,7 @@ export default function CardsPage() {
             <div className="w-8 h-8 bg-bank-primary rounded-lg flex items-center justify-center">
               <LayoutDashboard className="w-5 h-5 text-white" />
             </div>
-            <span className="text-lg font-bold text-bank-primary">NovaBank</span>
+            <span className="text-lg font-bold text-bank-primary">Regional EU Bank</span>
           </div>
           <div className="flex items-center space-x-3">
             <button className="relative p-2 text-gray-400 hover:text-gray-600 transition">
