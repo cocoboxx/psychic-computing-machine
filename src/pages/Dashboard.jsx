@@ -90,9 +90,7 @@ export default function Dashboard() {
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex w-64 bg-white border-r border-gray-200 flex-col sticky top-0 h-screen shrink-0">
         <div className="p-6 flex items-center space-x-2">
-          <div className="w-8 h-8 bg-bank-primary rounded-lg flex items-center justify-center">
-            <LayoutDashboard className="w-5 h-5 text-white" />
-          </div>
+        
           <span className="text-xl font-bold text-bank-primary">Regional EU Bank</span>
         </div>
 
@@ -127,9 +125,7 @@ export default function Dashboard() {
       <header className="lg:hidden bg-white border-b border-gray-200 sticky top-0 z-40 px-4 py-3">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-bank-primary rounded-lg flex items-center justify-center">
-              <LayoutDashboard className="w-5 h-5 text-white" />
-            </div>
+         
             <span className="text-lg font-bold text-bank-primary">Regional EU Bank</span>
           </div>
           <div className="flex items-center space-x-3">

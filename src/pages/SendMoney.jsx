@@ -1,19 +1,16 @@
 import { useState, useMemo } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { 
-  LayoutDashboard, CreditCard, ArrowUpRight, ArrowDownLeft, 
-  Wallet, Bell, Settings, LogOut, TrendingUp, TrendingDown,
-  Send, Download, ShoppingCart, Coffee, Home, Zap, Menu, X,
-  ChevronRight, ChevronLeft, Search, User, Building2, Clock,
-  AlertCircle, CheckCircle2, Shield, Fingerprint, Loader2
+  ArrowLeft, LayoutDashboard, CreditCard, ArrowUpRight, 
+  Wallet, Bell, Send, Download, Menu, X,
+  ChevronRight, ChevronLeft, Search, User, Clock,
+  AlertCircle, CheckCircle2, Shield, Loader2
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export default function SendMoney() {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('Send Money');
 
   // Flow states: 'amount' -> 'recipient' -> 'review' -> 'processing' -> 'restricted'
   const [step, setStep] = useState('amount');
@@ -25,20 +22,6 @@ export default function SendMoney() {
   const [restrictionReason, setRestrictionReason] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [showNewRecipientPopup, setShowNewRecipientPopup] = useState(false);
-
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
-
-  const navItems = [
-    { name: 'Dashboard', icon: <LayoutDashboard className="w-5 h-5" />, mobileIcon: <LayoutDashboard className="w-6 h-6" /> },
-    { name: 'Cards', icon: <CreditCard className="w-5 h-5" />, mobileIcon: <CreditCard className="w-6 h-6" /> },
-    { name: 'Transactions', icon: <ArrowUpRight className="w-5 h-5" />, mobileIcon: <ArrowUpRight className="w-6 h-6" /> },
-    { name: 'Wallet', icon: <Wallet className="w-5 h-5" />, mobileIcon: <Wallet className="w-6 h-6" /> },
-    { name: 'Notifications', icon: <Bell className="w-5 h-5" />, mobileIcon: <Bell className="w-6 h-6" /> },
-    { name: 'Settings', icon: <Settings className="w-5 h-5" />, mobileIcon: <Settings className="w-6 h-6" /> },
-  ];
 
   const quickAmounts = [50, 100, 250, 500, 1000, 2500];
 
@@ -100,22 +83,16 @@ export default function SendMoney() {
     setIsProcessing(true);
     setStep('processing');
 
-    // Simulate processing then show restriction
     setTimeout(() => {
       setIsProcessing(false);
       setShowRestriction(true);
-      setRestrictionReason('This feature is available only on the authorized Apple iPhone 16 Pro Max Black Titanium associated with this account. Access from unrecognized devices has been blocked to protect your account.');
+      setRestrictionReason('This feature is available only on the authorized Apple IPhone 16 Pro Max Black Titanium associated with this account. Access from unrecognized devices has been blocked to protect your account.');
     }, 2500);
   };
 
   const handleCloseRestriction = () => {
     setShowRestriction(false);
     navigate('/dashboard');
-  };
-
-  const handleGoToVerification = () => {
-    setShowRestriction(false);
-    navigate('/settings/verification');
   };
 
   const handleContactSupport = () => {
@@ -136,15 +113,39 @@ export default function SendMoney() {
     return num > 0 ? num.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) : '$0.00';
   };
 
+  // Determine page title based on current step
+  const getPageTitle = () => {
+    if (step === 'amount') return 'Send Money';
+    if (step === 'recipient') return 'Choose Recipient';
+    if (step === 'review') return 'Review & Send';
+    if (step === 'processing') return 'Processing';
+    return 'Send Money';
+  };
+
+  // Handle back navigation between steps
+  const handleBack = () => {
+    if (step === 'recipient') {
+      setStep('amount');
+    } else if (step === 'review') {
+      setStep('recipient');
+    } else {
+      navigate('/dashboard');
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col lg:flex-row pb-20 lg:pb-0">
+    <div className="min-h-screen bg-gray-50 pb-20 lg:pb-0 lg:flex">
+      {/* ========== POPUPS ========== */}
+      
       {/* Restriction Popup Overlay */}
       {showRestriction && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={handleCloseRestriction}></div>
           <div className="relative bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-200">
-            {/* Header with warning gradient */}
-            <div className="bg-gradient-to-br from-red-500 to-orange-500 p-6 sm:p-8 text-center relative overflow-hidden">
+            <div 
+              className="p-6 sm:p-8 text-center relative overflow-hidden"
+              style={{ background: 'linear-gradient(to bottom right, #ef4444, #f97316)' }}
+            >
               <div className="absolute top-0 right-0 w-32 h-32 rounded-full -mr-16 -mt-16 bg-white/10"></div>
               <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full -ml-12 -mb-12 bg-white/5"></div>
 
@@ -181,7 +182,6 @@ export default function SendMoney() {
               </div>
 
               <div className="space-y-3">
-                
                 <button 
                   onClick={handleCloseRestriction}
                   className="w-full py-3.5 rounded-xl bg-gray-100 text-gray-700 font-semibold hover:bg-gray-200 transition"
@@ -203,8 +203,10 @@ export default function SendMoney() {
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={handleCloseNewRecipientPopup}></div>
           <div className="relative bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-200">
-            {/* Header with warning gradient */}
-            <div className="bg-gradient-to-br from-orange-500 to-red-500 p-6 sm:p-8 text-center relative overflow-hidden">
+            <div 
+              className="p-6 sm:p-8 text-center relative overflow-hidden"
+              style={{ background: 'linear-gradient(to bottom right, #f97316, #ef4444)' }}
+            >
               <div className="absolute top-0 right-0 w-32 h-32 rounded-full -mr-16 -mt-16 bg-white/10"></div>
               <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full -ml-12 -mb-12 bg-white/5"></div>
 
@@ -221,12 +223,11 @@ export default function SendMoney() {
               <div className="flex items-start space-x-3 mb-6 bg-orange-50 rounded-xl p-4 border border-orange-100">
                 <AlertCircle className="w-5 h-5 text-orange-500 shrink-0 mt-0.5" />
                 <p className="text-sm text-orange-800 leading-relaxed">
-                 For security reasons, this action can only be completed from the IPhone 16 Pro Max Black Titanium associated with this account.
+                  For security reasons, this action can only be completed from the IPhone 16 Pro Max Black Titanium associated with this account.
                 </p>
               </div>
 
               <div className="space-y-3">
-               
                 <button 
                   onClick={handleCloseNewRecipientPopup}
                   className="w-full py-3.5 rounded-xl bg-gray-100 text-gray-700 font-semibold hover:bg-gray-200 transition"
@@ -243,144 +244,40 @@ export default function SendMoney() {
         </div>
       )}
 
-      {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex w-64 bg-white border-r border-gray-200 flex-col sticky top-0 h-screen shrink-0">
-        <div className="p-6 flex items-center space-x-2">
-          <div className="w-8 h-8 bg-bank-primary rounded-lg flex items-center justify-center">
-            <LayoutDashboard className="w-5 h-5 text-white" />
-          </div>
-          <span className="text-xl font-bold text-bank-primary">Regional EU Bank</span>
-        </div>
-
-        <nav className="flex-1 px-4 space-y-1">
-          {navItems.map((item) => (
-            <button
-              key={item.name}
-              onClick={() => {
-                setActiveTab(item.name);
-                if (item.name === 'Dashboard') navigate('/dashboard');
-              }}
-              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition ${
-                activeTab === item.name
-                  ? 'bg-bank-primary text-white shadow-lg shadow-blue-900/20' 
-                  : 'text-gray-600 hover:bg-gray-50'
-              }`}
-            >
-              {item.icon}
-              <span className="font-medium">{item.name}</span>
-            </button>
-          ))}
-        </nav>
-
-        <div className="p-4 border-t border-gray-100">
-          <button 
-            onClick={handleLogout}
-            className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-red-600 hover:bg-red-50 transition"
-          >
-            <LogOut className="w-5 h-5" />
-            <span className="font-medium">Sign Out</span>
-          </button>
-        </div>
-      </aside>
+      {/* ========== HEADERS ========== */}
 
       {/* Mobile Header */}
       <header className="lg:hidden bg-white border-b border-gray-200 sticky top-0 z-40 px-4 py-3">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-bank-primary rounded-lg flex items-center justify-center">
-              <LayoutDashboard className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-lg font-bold text-bank-primary">Regional EU Bank</span>
-          </div>
-          <div className="flex items-center space-x-3">
-            <button className="relative p-2 text-gray-400 hover:text-gray-600 transition">
-              <Bell className="w-5 h-5" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-            </button>
-            <button 
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
+        <div className="flex items-center space-x-3">
+          <button
+            onClick={handleBack}
+            className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </button>
+          <h1 className="text-lg font-bold text-bank-dark">{getPageTitle()}</h1>
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 z-50 bg-white">
-          <div className="p-4 border-b border-gray-200 flex justify-between items-center">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-bank-primary rounded-lg flex items-center justify-center">
-                <LayoutDashboard className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-lg font-bold text-bank-primary">Menu</span>
-            </div>
-            <button 
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition"
-            >
-              <X className="w-6 h-6" />
-            </button>
-          </div>
-          <nav className="p-4 space-y-2">
-            {navItems.map((item) => (
-              <button
-                key={item.name}
-                onClick={() => {
-                  setActiveTab(item.name);
-                  setMobileMenuOpen(false);
-                  if (item.name === 'Dashboard') navigate('/dashboard');
-                }}
-                className={`w-full flex items-center space-x-3 px-4 py-4 rounded-xl transition text-lg ${
-                  activeTab === item.name
-                    ? 'bg-bank-primary text-white shadow-lg shadow-blue-900/20' 
-                    : 'text-gray-600 hover:bg-gray-50'
-                }`}
-              >
-                {item.icon}
-                <span className="font-medium">{item.name}</span>
-                <ChevronRight className="w-5 h-5 ml-auto opacity-50" />
-              </button>
-            ))}
-            <div className="pt-4 border-t border-gray-100 mt-4">
-              <button 
-                onClick={handleLogout}
-                className="w-full flex items-center space-x-3 px-4 py-4 rounded-xl text-red-600 hover:bg-red-50 transition text-lg"
-              >
-                <LogOut className="w-5 h-5" />
-                <span className="font-medium">Sign Out</span>
-              </button>
-            </div>
-          </nav>
+      {/* Desktop Sidebar placeholder */}
+      <aside className="hidden lg:flex w-64 bg-white border-r border-gray-200 flex-col sticky top-0 h-screen shrink-0">
+        <div className="p-6 flex items-center space-x-2">
+       
+          <span className="text-xl font-bold text-bank-primary">Regional EU Bank</span>
         </div>
-      )}
+      </aside>
 
-      {/* Main Content */}
       <main className="flex-1 overflow-auto min-w-0">
         {/* Desktop Header */}
         <header className="hidden lg:flex bg-white border-b border-gray-200 sticky top-0 z-30 px-8 py-4">
-          <div className="flex justify-between items-center w-full">
-            <div>
-              <h1 className="text-2xl font-bold text-bank-dark">{activeTab}</h1>
-              <p className="text-gray-500 text-sm">Welcome back, {user?.name || 'User'}</p>
-            </div>
-            <div className="flex items-center space-x-4">
-              <button className="relative p-2 text-gray-400 hover:text-gray-600 transition">
-                <Bell className="w-6 h-6" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-              </button>
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-bank-primary rounded-full flex items-center justify-center text-white font-semibold">
-                  {user?.name?.[0] || 'U'}
-                </div>
-                <div className="hidden xl:block">
-                  <p className="text-sm font-semibold text-bank-dark">{user?.name || 'User'}</p>
-                  <p className="text-xs text-gray-500">Premium Member</p>
-                </div>
-              </div>
-            </div>
+          <div className="flex items-center space-x-3">
+            <button
+              onClick={handleBack}
+              className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+            <h1 className="text-2xl font-bold text-bank-dark">{getPageTitle()}</h1>
           </div>
         </header>
 
@@ -653,25 +550,27 @@ export default function SendMoney() {
       </main>
 
       {/* Mobile Bottom Navigation */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-40 pb-safe">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-40">
         <div className="flex justify-around items-center h-16">
-          {navItems.slice(0, 5).map((item) => (
-            <button
-              key={item.name}
-              onClick={() => {
-                setActiveTab(item.name);
-                if (item.name === 'Dashboard') navigate('/dashboard');
-              }}
-              className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition ${
-                activeTab === item.name
-                  ? 'text-bank-primary' 
-                  : 'text-gray-400 hover:text-gray-600'
-              }`}
-            >
-              {item.mobileIcon}
-              <span className="text-[10px] font-medium">{item.name}</span>
-            </button>
-          ))}
+          {['Dashboard', 'Cards', 'Transactions', 'Wallet', 'Notifications'].map((name, i) => {
+            const icons = [
+              <svg key="d" className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>,
+              <svg key="c" className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>,
+              <svg key="t" className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11l5-5m0 0l5 5m-5-5v12" /></svg>,
+              <svg key="w" className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z" /></svg>,
+              <svg key="n" className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
+            ];
+            return (
+              <button
+                key={name}
+                onClick={() => navigate(name === 'Dashboard' ? '/dashboard' : `/${name.toLowerCase()}`)}
+                className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition ${name === 'Dashboard' ? 'text-bank-primary' : 'text-gray-400'}`}
+              >
+                {icons[i]}
+                <span className="text-[10px] font-medium">{name}</span>
+              </button>
+            );
+          })}
         </div>
       </nav>
     </div>

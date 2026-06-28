@@ -63,9 +63,7 @@ export default function RequestMoney() {
       {/* Desktop Sidebar placeholder — in real app, import shared Sidebar component */}
       <aside className="hidden lg:flex w-64 bg-white border-r border-gray-200 flex-col sticky top-0 h-screen shrink-0">
         <div className="p-6 flex items-center space-x-2">
-          <div className="w-8 h-8 bg-bank-primary rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">R</span>
-          </div>
+        
           <span className="text-xl font-bold text-bank-primary">Regional EU Bank</span>
         </div>
       </aside>
